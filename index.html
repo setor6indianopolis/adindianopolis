@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assembleia de Deus – Setor Indianópolis | Ministério do Belém</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --azul-escuro: #0a1a2e;
+  --azul: #0d2b4e;
+  --azul-meio: #1a4a7a;
+  --azul-claro: #2e6fad;
+  --branco: #ffffff;
+  --cinza-bg: #f5f5f5;
+  --cinza-texto: #555;
+  --cinza-borda: #e0e0e0;
+  --dourado: #c8a84b;
+  --nav-height: 70px;
+}
+body { font-family: 'Open Sans', sans-serif; background: #fff; color: #222; overflow-x: hidden; }
+a { text-decoration: none; color: inherit; }
+
+/* ── PAGES (SPA) ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* PAGE HEADER (páginas internas) */
+.page-header { background: var(--azul); padding: 52px 20px 44px; text-align: center; }
+.page-header h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(24px,4vw,40px); font-weight: 800; color: #fff; }
+.breadcrumb { margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.5); }
+.breadcrumb a { color: var(--dourado); cursor: pointer; }
+.breadcrumb a:hover { text-decoration: underline; }
+.page-content { max-width: 860px; margin: 0 auto; padding: 52px 20px 72px; }
+.page-content h2 { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; color: var(--azul); margin: 32px 0 12px; }
+.page-content h2:first-child { margin-top: 0; }
+.page-content p { font-size: 15px; color: var(--cinza-texto); line-height: 1.85; margin-bottom: 14px; }
+.page-content .verse-box { background: var(--azul); border-radius: 6px; padding: 24px 28px; margin: 28px 0; }
+.page-content .verse-box p { color: rgba(255,255,255,.75); font-style: italic; font-size: 15px; margin: 0 0 8px; }
+.page-content .verse-box cite { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dourado); font-style: normal; }
+.divider-gold { width: 44px; height: 3px; background: var(--dourado); border-radius: 2px; margin: 0 0 28px; }
+
+/* Notícias grid */
+.noticias-page-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 8px; }
+.npcard { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,.09); border: 1px solid var(--cinza-borda); transition: transform .25s, box-shadow .25s; cursor: pointer; }
+.npcard:hover { transform: translateY(-4px); box-shadow: 0 8px 26px rgba(0,0,0,.13); }
+.npthumb { height: 170px; display: flex; align-items: center; justify-content: center; }
+.npthumb svg { width: 44px; height: 44px; opacity: .2; }
+.t1{background:linear-gradient(135deg,#0d2b4e,#1a4a7a);}
+.t2{background:linear-gradient(135deg,#1a2d0a,#3a5a1a);}
+.t3{background:linear-gradient(135deg,#2a0808,#5a1818);}
+.t4{background:linear-gradient(135deg,#1a1a08,#4a400a);}
+.t5{background:linear-gradient(135deg,#0a1a2a,#0f2040);}
+.t6{background:linear-gradient(135deg,#0d200d,#1a401a);}
+.npbody { padding: 16px 18px 18px; }
+.npcat { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--azul-claro); margin-bottom: 6px; }
+.npbody h3 { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; color: var(--azul); line-height: 1.35; margin-bottom: 8px; }
+.npbody p { font-size: 13px; color: var(--cinza-texto); line-height: 1.65; }
+.nplink { display: inline-block; margin-top: 10px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--azul-claro); border-bottom: 1px solid var(--dourado); }
+
+/* TOP BAR */
+.topbar { background: var(--azul-escuro); font-size: 12px; color: rgba(255,255,255,.65); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
+.topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
+.topbar-left { display: flex; gap: 18px; align-items: center; }
+.topbar-right { display: flex; gap: 14px; align-items: center; }
+.topbar-right a { color: rgba(255,255,255,.65); transition: color .2s; }
+.topbar-right a:hover { color: var(--dourado); }
+.oferta-btn { background: var(--dourado); color: var(--azul-escuro) !important; padding: 4px 14px; border-radius: 3px; font-weight: 700; font-size: 11px; letter-spacing: .5px; text-transform: uppercase; }
+
+/* NAVBAR */
+nav { background: var(--azul); height: var(--nav-height); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,.35); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.logo-wrap { display: flex; align-items: center; gap: 11px; flex-shrink: 0; cursor: pointer; }
+.logo-icon { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.08); border: 2px solid var(--dourado); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo-icon svg { width: 22px; height: 22px; }
+.lg-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800; color: #fff; line-height: 1.1; }
+.lg-sub { font-size: 10px; color: var(--dourado); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.nav-menu { display: flex; list-style: none; gap: 0; align-items: center; flex-wrap: wrap; }
+.nav-menu a { display: block; padding: 6px 10px; font-family: 'Montserrat', sans-serif; font-size: 11.5px; font-weight: 700; color: rgba(255,255,255,.82); border-radius: 3px; letter-spacing: .1px; transition: background .15s, color .15s; white-space: nowrap; cursor: pointer; }
+.nav-menu a:hover { color: var(--dourado); }
+.nav-menu a.active { color: var(--dourado); }
+.nav-right { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.nav-social { display: flex; gap: 7px; }
+.nav-social a { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.7); font-size: 11px; font-weight: 700; transition: background .2s, color .2s; }
+.nav-social a:hover { background: var(--dourado); color: var(--azul-escuro); }
+
+/* HERO SLIDER */
+.hero-slider { position: relative; background: #000; overflow: hidden; height: 520px; }
+.slides { display: flex; height: 100%; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+.slide { min-width: 100%; height: 100%; position: relative; display: flex; align-items: center; }
+.slide-bg { position: absolute; inset: 0; }
+.slide-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,18,35,.88) 0%, rgba(8,18,35,.55) 55%, rgba(8,18,35,.18) 100%); }
+.slide-1 .slide-bg { background: linear-gradient(125deg, #08122a 0%, #122d5c 45%, #0d2248 100%); }
+.slide-2 .slide-bg { background: linear-gradient(125deg, #0a1a0a 0%, #1a4a20 45%, #0d2a12 100%); }
+.slide-3 .slide-bg { background: linear-gradient(125deg, #1a0808 0%, #4a1015 45%, #2a0a0d 100%); }
+.slide-1 .slide-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 72% 50%, rgba(200,168,75,.2) 0%, transparent 60%); }
+.slide-2 .slide-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 68% 45%, rgba(60,180,60,.14) 0%, transparent 60%); }
+.slide-3 .slide-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 50%, rgba(220,60,60,.16) 0%, transparent 60%); }
+.slide-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 60px; width: 100%; }
+.slide-tag { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); border-left: 3px solid var(--dourado); padding-left: 10px; margin-bottom: 14px; }
+.slide h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(28px, 4vw, 54px); font-weight: 800; color: #fff; line-height: 1.1; max-width: 560px; margin-bottom: 16px; text-shadow: 0 2px 20px rgba(0,0,0,.4); }
+.slide-desc { font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.75; max-width: 460px; margin-bottom: 28px; }
+.slide-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-hp { background: var(--dourado); color: var(--azul-escuro); padding: 12px 26px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; transition: background .2s; display: inline-block; cursor: pointer; }
+.btn-hp:hover { background: #dfc06a; }
+.btn-ho { border: 2px solid rgba(255,255,255,.4); color: #fff; padding: 10px 26px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; transition: border-color .2s, background .2s; display: inline-block; cursor: pointer; }
+.btn-ho:hover { border-color: var(--dourado); background: rgba(200,168,75,.12); }
+.slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.3); border: none; cursor: pointer; transition: background .2s, transform .2s; padding: 0; }
+.dot.active { background: var(--dourado); transform: scale(1.3); }
+.sarrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.42); border: none; cursor: pointer; color: #fff; font-size: 22px; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background .2s; }
+.sarrow:hover { background: rgba(0,0,0,.7); }
+.sarrow.prev { left: 14px; }
+.sarrow.next { right: 14px; }
+
+/* CULTO AO VIVO */
+.culto-section { background: var(--azul); padding: 64px 0; }
+.culto-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.cv-tag { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.live-dot { width: 10px; height: 10px; border-radius: 50%; background: #e03030; animation: pulsed 1.5s infinite; flex-shrink: 0; }
+@keyframes pulsed { 0%{box-shadow:0 0 0 0 rgba(224,48,48,.6);} 70%{box-shadow:0 0 0 10px rgba(224,48,48,0);} 100%{box-shadow:0 0 0 0 rgba(224,48,48,0);} }
+.culto-inner h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(22px,3vw,34px); font-weight: 800; color: #fff; margin-bottom: 14px; line-height: 1.2; }
+.culto-inner p { font-size: 15px; color: rgba(255,255,255,.68); line-height: 1.8; margin-bottom: 24px; }
+.culto-inner p strong { color: rgba(255,255,255,.9); }
+.cv-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-yt { background: #ff0000; color: #fff; padding: 11px 20px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: background .2s; }
+.btn-yt:hover { background: #cc0000; }
+.btn-ig { background: linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); color: #fff; padding: 11px 20px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: opacity .2s; }
+.btn-ig:hover { opacity: .85; }
+.cv-player { background: rgba(0,0,0,.38); border-radius: 8px; aspect-ratio: 16/9; border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; }
+.cv-player-inner { display: flex; flex-direction: column; align-items: center; gap: 14px; color: rgba(255,255,255,.38); text-align: center; }
+.play-big { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,.08); border: 2px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; transition: background .2s, border-color .2s; }
+.play-big:hover { background: rgba(200,168,75,.22); border-color: var(--dourado); }
+
+/* VERSÍCULO BAR */
+.versiculo-bar { background: var(--azul-escuro); padding: 36px 20px; text-align: center; }
+.versiculo-bar blockquote { font-family: 'Montserrat', sans-serif; font-size: clamp(14px,2vw,20px); font-style: italic; color: rgba(255,255,255,.72); line-height: 1.7; max-width: 800px; margin: 0 auto 10px; }
+.versiculo-bar cite { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dourado); font-style: normal; }
+
+/* NOTÍCIAS CARROSSEL */
+.noticias-section { padding: 64px 0; }
+.sh-row { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+.eyebrow { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--azul-claro); margin-bottom: 5px; }
+.sh-title { font-family: 'Montserrat', sans-serif; font-size: clamp(22px,3vw,32px); font-weight: 800; color: var(--azul); }
+.sh-title span { color: var(--dourado); }
+.sh-div { width: 40px; height: 3px; background: var(--dourado); border-radius: 2px; margin-top: 10px; }
+.ver-link { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--azul-claro); border-bottom: 1px solid var(--azul-claro); padding-bottom: 2px; transition: color .2s; white-space: nowrap; margin-bottom: 4px; cursor: pointer; }
+.ver-link:hover { color: var(--dourado); border-color: var(--dourado); }
+.car-wrap { position: relative; }
+.car-outer { max-width: 1200px; margin: 0 auto; padding: 0 20px; overflow: hidden; }
+.car-track { display: flex; gap: 20px; transition: transform .5s cubic-bezier(.4,0,.2,1); will-change: transform; }
+.nc { min-width: calc(33.333% - 14px); background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 14px rgba(0,0,0,.09); border: 1px solid var(--cinza-borda); transition: transform .25s, box-shadow .25s; flex-shrink: 0; }
+.nc:hover { transform: translateY(-5px); box-shadow: 0 8px 28px rgba(0,0,0,.14); }
+.nc-thumb { height: 188px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.nc-thumb svg { position: absolute; right: 14px; bottom: 14px; width: 44px; height: 44px; opacity: .18; }
+.nc-body { padding: 17px 18px 20px; }
+.nc-cat { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--azul-claro); margin-bottom: 7px; }
+.nc-body h3 { font-family: 'Montserrat', sans-serif; font-size: 14.5px; font-weight: 700; color: var(--azul); line-height: 1.35; margin-bottom: 9px; }
+.nc-body p { font-size: 13px; color: var(--cinza-texto); line-height: 1.65; }
+.nc-link { display: inline-block; margin-top: 11px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; color: var(--azul-claro); border-bottom: 1px solid var(--dourado); transition: color .2s; cursor: pointer; }
+.nc-link:hover { color: var(--dourado); }
+.cbtn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(13,43,78,.88); border: none; cursor: pointer; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; z-index: 10; transition: background .2s; box-shadow: 0 2px 10px rgba(0,0,0,.28); }
+.cbtn:hover { background: var(--azul-meio); }
+.cbtn.cp { left: 0; }
+.cbtn.cn { right: 0; }
+
+/* RÁDIO */
+.radio-section { background: var(--azul-escuro); padding: 64px 0; }
+.radio-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.radio-visual-wrap { display: flex; align-items: center; justify-content: center; }
+.radio-ring-outer { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; }
+.rwave { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 2px solid rgba(200,168,75,.22); animation: wout 2.2s ease-out infinite; }
+.rwave.d2{animation-delay:.7s;} .rwave.d3{animation-delay:1.4s;}
+@keyframes wout { from{transform:scale(1);opacity:.6;} to{transform:scale(1.5);opacity:0;} }
+.radio-disc { width: 210px; height: 210px; border-radius: 50%; background: var(--azul-meio); border: 4px solid var(--dourado); display: flex; align-items: center; justify-content: center; position: relative; animation: rspin 18s linear infinite; animation-play-state: paused; }
+.radio-disc.playing { animation-play-state: running; }
+@keyframes rspin { from{transform:rotate(0);} to{transform:rotate(360deg);} }
+.radio-disc::before { content: ''; position: absolute; width: 56px; height: 56px; border-radius: 50%; background: var(--azul-escuro); border: 3px solid var(--dourado); }
+.rd-label { position: absolute; z-index: 1; text-align: center; }
+.rd-label .rdfm { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; color: var(--dourado); line-height: 1; }
+.rd-label .rdsub { font-size: 9px; font-weight: 700; color: rgba(255,255,255,.55); letter-spacing: 2px; text-transform: uppercase; }
+.radio-text .rv-tag { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--dourado); margin-bottom: 13px; display: flex; align-items: center; gap: 7px; }
+.radio-text h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(22px,3vw,30px); font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 12px; }
+.radio-text h2 span { color: var(--dourado); }
+.radio-text p { font-size: 15px; color: rgba(255,255,255,.62); line-height: 1.8; margin-bottom: 22px; }
+.radio-player-bar { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 6px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.rplay-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--dourado); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--azul-escuro); flex-shrink: 0; transition: background .2s; }
+.rplay-btn:hover { background: #dfc06a; }
+.rinfo .rsong { font-size: 13px; font-weight: 600; color: #fff; }
+.rinfo .rsub { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 2px; }
+.swave { display: flex; align-items: center; gap: 3px; margin-left: auto; }
+.sbar { width: 3px; background: var(--dourado); border-radius: 2px; animation: bdance .85s ease-in-out infinite alternate; }
+.sbar:nth-child(1){height:7px;} .sbar:nth-child(2){height:17px;animation-delay:.1s;} .sbar:nth-child(3){height:11px;animation-delay:.2s;} .sbar:nth-child(4){height:21px;animation-delay:.05s;} .sbar:nth-child(5){height:9px;animation-delay:.15s;}
+@keyframes bdance { from{transform:scaleY(1);} to{transform:scaleY(.3);} }
+.btn-radio { background: var(--dourado); color: var(--azul-escuro); padding: 11px 22px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; transition: background .2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-radio:hover { background: #dfc06a; }
+
+/* IGREJAS */
+.igrejas-section { padding: 64px 0; background: var(--cinza-bg); }
+.igrejas-inner { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.igrejas-map { margin-top: 32px; background: #d0e4ef; border-radius: 8px; height: 320px; overflow: hidden; border: 1px solid #bcd; }
+.igrejas-map iframe { width: 100%; height: 100%; border: 0; }
+.igrejas-addr { margin-top: 14px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 600; color: var(--azul-meio); }
+
+/* VERSÍCULO FINAL */
+.verse-final { background: var(--azul); padding: 56px 20px; text-align: center; }
+.verse-final blockquote { font-family: 'Montserrat', sans-serif; font-size: clamp(15px,2.2vw,22px); font-style: italic; color: rgba(255,255,255,.82); line-height: 1.65; max-width: 820px; margin: 0 auto 12px; }
+.verse-final cite { font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--dourado); font-style: normal; }
+.vf-social { display: flex; justify-content: center; gap: 12px; margin-top: 22px; }
+.vf-soc { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.65); font-size: 13px; font-weight: 700; transition: background .2s, color .2s; }
+.vf-soc:hover { background: var(--dourado); color: var(--azul-escuro); }
+.vf-radio { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.18); padding: 8px 20px; border-radius: 3px; transition: border-color .2s, color .2s; }
+.vf-radio:hover { border-color: var(--dourado); color: var(--dourado); }
+
+/* FOOTER */
+footer { background: #07111f; padding: 52px 0 0; }
+.footer-grid { max-width: 1200px; margin: 0 auto; padding: 0 20px 44px; display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr; gap: 36px; }
+.ft-title { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800; color: #fff; }
+.ft-sub { font-size: 10px; color: var(--dourado); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,.42); line-height: 1.75; margin-top: 14px; }
+.ft-social { display: flex; gap: 9px; margin-top: 16px; }
+.ft-social a { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.07); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.55); font-size: 11px; font-weight: 700; transition: background .2s, color .2s; }
+.ft-social a:hover { background: var(--dourado); color: var(--azul-escuro); }
+.footer-col h4 { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--dourado); margin-bottom: 15px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 9px; }
+.footer-col ul li a { font-size: 13px; color: rgba(255,255,255,.48); transition: color .2s; cursor: pointer; }
+.footer-col ul li a:hover { color: rgba(255,255,255,.9); }
+.ct-row { margin-bottom: 11px; }
+.ct-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.28); }
+.ct-val { font-size: 13px; color: rgba(255,255,255,.48); margin-top: 2px; }
+.ct-val a { color: rgba(255,255,255,.48); }
+.ct-val a:hover { color: rgba(255,255,255,.9); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding: 17px 20px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+.footer-bottom p { font-size: 11px; color: rgba(255,255,255,.28); }
+.footer-bottom a { color: rgba(255,255,255,.32); font-size: 11px; cursor: pointer; }
+.footer-bottom a:hover { color: rgba(255,255,255,.75); }
+
+/* COOKIE */
+.cookie-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 999; background: rgba(7,17,31,.97); border-top: 1px solid rgba(255,255,255,.07); padding: 14px 24px; display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,.6); transition: transform .4s; }
+.cookie-bar.hidden { transform: translateY(110%); }
+.cookie-bar a { color: var(--dourado); cursor: pointer; }
+.ck-btn { background: var(--dourado); color: var(--azul-escuro); border: none; padding: 8px 22px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s; }
+.ck-btn:hover { background: #dfc06a; }
+
+/* RESPONSIVE */
+@media(max-width:960px){ .culto-inner,.radio-inner{grid-template-columns:1fr;gap:32px;} .footer-grid{grid-template-columns:1fr 1fr;} .nc{min-width:calc(50% - 10px);} .noticias-page-grid{grid-template-columns:1fr 1fr;} }
+@media(max-width:700px){ .hero-slider{height:400px;} .slide-content{padding:0 20px;} .nc{min-width:100%;} .footer-grid{grid-template-columns:1fr;} .nav-menu{display:none;} .topbar-left{display:none;} .radio-disc{width:160px;height:160px;} .radio-ring-outer{width:200px;height:200px;} .noticias-page-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span>📍 Rua Maria Almeida do Prado, 51 – Indianópolis, SP</span>
+    </div>
+    <div class="topbar-right">
+      <a href="https://ad.org.br" target="_blank">Sede AD Belém</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo-wrap" onclick="showPage('home')">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="10" y="2" width="4" height="20" rx="1.5" fill="#c8a84b"/><rect x="2" y="7" width="20" height="4" rx="1.5" fill="#c8a84b"/></svg>
+      </div>
+      <div>
+        <div class="lg-title">AD Indianópolis</div>
+        <div class="lg-sub">Ministério do Belém</div>
+      </div>
+    </div>
+
+    <ul class="nav-menu">
+      <li><a id="nav-home"     onclick="showPage('home')"    class="active">Home</a></li>
+      <li><a id="nav-credo"    onclick="showPage('credo')">Nosso Credo</a></li>
+      <li><a id="nav-noticias" onclick="showPage('noticias')">Notícias</a></li>
+      <li><a id="nav-culto"    onclick="scrollTo('culto-vivo')">Culto ao vivo</a></li>
+      <li><a id="nav-contato"  onclick="scrollTo('contato')">Contato</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-social">
+        <a href="https://facebook.com" target="_blank" title="Facebook">f</a>
+        <a href="https://instagram.com" target="_blank" title="Instagram">in</a>
+        <a href="https://youtube.com" target="_blank" title="YouTube">▶</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════ PÁGINA: HOME ══════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO SLIDER -->
+  <section class="hero-slider" id="home">
+    <div class="slides" id="slider">
+      <div class="slide slide-1">
+        <div class="slide-bg"></div>
+        <div class="slide-content">
+          <p class="slide-tag">Assembleia de Deus · Setor Indianópolis</p>
+          <h2>Bem-vindo à<br>AD Indianópolis</h2>
+          <p class="slide-desc">Uma comunidade de fé comprometida com o Evangelho de Jesus Cristo. Venha adorar conosco!</p>
+          <div class="slide-btns">
+            <a class="btn-hp" onclick="scrollTo('culto-vivo')">▶ Culto ao Vivo</a>
+            <a class="btn-ho" onclick="showPage('noticias')">Ver Notícias</a>
+          </div>
+        </div>
+      </div>
+      <div class="slide slide-2">
+        <div class="slide-bg"></div>
+        <div class="slide-content">
+          <p class="slide-tag">Programação semanal</p>
+          <h2>Venha Adorar<br>ao Senhor</h2>
+          <p class="slide-desc">Cultos aos domingos às 09h e 18h, e durante a semana. Toda a família é bem-vinda!</p>
+          <div class="slide-btns">
+            <a class="btn-hp" onclick="scrollTo('contato')">📅 Como Chegar</a>
+            <a class="btn-ho" onclick="scrollTo('culto-vivo')">Culto ao Vivo</a>
+          </div>
+        </div>
+      </div>
+      <div class="slide slide-3">
+        <div class="slide-bg"></div>
+        <div class="slide-content">
+          <p class="slide-tag">Ministério do Belém</p>
+          <h2>Unidos em<br>Cristo Jesus</h2>
+          <p class="slide-desc">Fazemos parte do Ministério do Belém, sob liderança do Rev. José Wellington Bezerra da Costa.</p>
+          <div class="slide-btns">
+            <a href="https://ad.org.br" target="_blank" class="btn-hp">🌐 Sede AD Belém</a>
+            <a class="btn-ho" onclick="showPage('credo')">Nosso Credo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="sarrow prev" id="sp">&#8249;</button>
+    <button class="sarrow next" id="sn">&#8250;</button>
+    <div class="slider-dots">
+      <button class="dot active" data-i="0"></button>
+      <button class="dot" data-i="1"></button>
+      <button class="dot" data-i="2"></button>
+    </div>
+  </section>
+
+  <!-- CULTO AO VIVO -->
+  <section class="culto-section" id="culto-vivo">
+    <div class="culto-inner">
+      <div>
+        <div class="cv-tag"><span class="live-dot"></span>Transmissão Online</div>
+        <h2>Cultos ao vivo</h2>
+        <p>Pela graça de Deus, estamos felizes em entregar um serviço de <strong>transmissão ao vivo online</strong> apenas para você. Junte-se a nós assistindo ao vivo todos os nossos cultos.</p>
+        <div class="cv-btns">
+          <a href="https://www.youtube.com/channel/UCGeIoNYN6X_OVXY_ZLlLxkA?sub_confirmation=1" target="_blank" class="btn-yt">▶ Inscreva-se no YouTube</a>
+          <a href="https://www.instagram.com/adbelemsp/" target="_blank" class="btn-ig">📷 Siga no Instagram</a>
+        </div>
+      </div>
+      <div class="cv-player">
+        <div class="cv-player-inner">
+          <div class="play-big">▶</div>
+          <p style="font-size:14px;">Assista ao culto ao vivo</p>
+          <p style="font-size:12px;">YouTube · TV AD Belém</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VERSÍCULO -->
+  <div class="versiculo-bar">
+    <blockquote>"Ora, a fé é o firme fundamento das coisas que se esperam, e a prova das coisas que não se vêem."</blockquote>
+    <cite>Pastor Adeli – AD Indianópolis · Ministério do Belém</cite>
+  </div>
+
+  <!-- NOTÍCIAS CARROSSEL -->
+  <section class="noticias-section">
+    <div class="sh-row">
+      <div>
+        <p class="eyebrow">Atualizações</p>
+        <h2 class="sh-title">Notícias <span>recentes</span></h2>
+        <div class="sh-div"></div>
+      </div>
+      <a class="ver-link" onclick="showPage('noticias')">Mais notícias →</a>
+    </div>
+    <div class="car-wrap">
+      <button class="cbtn cp" id="cp">&#8249;</button>
+      <div class="car-outer">
+        <div class="car-track" id="ct">
+          <div class="nc">
+            <div class="nc-thumb t1"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Pastoral</p><h3>Pr. Adeli assume liderança no Setor Indianópolis</h3><p>Culto de transição ocorreu em 1º de abril, dirigido pelo Vice-Presidente Pastor José Wellington Costa Junior.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+          <div class="nc">
+            <div class="nc-thumb t2"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Batismo</p><h3>1º Batismo de 2026 enche o templo na AD Belém em SP</h3><p>Foram 690 homens e 654 mulheres, totalizando 1.344 candidatos no último domingo de fevereiro.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+          <div class="nc">
+            <div class="nc-thumb t3"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Eventos</p><h3>Culto da Família na Assembleia de Deus Ministério do Belém</h3><p>Culto especial reuniu gerações em momentos de adoração, comunhão e crescimento espiritual.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+          <div class="nc">
+            <div class="nc-thumb t4"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Rádio</p><h3>"Palavra em Foco" celebra um ano com edição especial</h3><p>Programa transmitido pela Rádio AD FM 88.7 completou um ano com presença do Pastor Presidente.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+          <div class="nc">
+            <div class="nc-thumb t5"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Setores</p><h3>Transições pastorais marcam gratidão e continuidade no Ministério</h3><p>O Ministério do Belém viveu dias especiais de transições pastorais em diferentes regiões de SP.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+          <div class="nc">
+            <div class="nc-thumb t6"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+            <div class="nc-body"><p class="nc-cat">Pastoral</p><h3>Transição Pastoral no Setor de Osasco (SP)</h3><p>Pastor José Prado Veiga assumiu os trabalhos substituindo Pr. Luiz Ricardo por motivo de saúde.</p><a class="nc-link" onclick="showPage('noticias')">Leia mais →</a></div>
+          </div>
+        </div>
+      </div>
+      <button class="cbtn cn" id="cn">&#8250;</button>
+    </div>
+  </section>
+
+  <!-- RÁDIO -->
+  <section class="radio-section" id="radio">
+    <div class="radio-inner">
+      <div class="radio-visual-wrap">
+        <div class="radio-ring-outer">
+          <div class="rwave"></div><div class="rwave d2"></div><div class="rwave d3"></div>
+          <div class="radio-disc" id="rd">
+            <div class="rd-label"><div class="rdfm">88.7</div><div class="rdsub">FM · AD</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="radio-text">
+        <div class="rv-tag"><svg width="14" height="14" viewBox="0 0 24 24" fill="#c8a84b"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>Rádio Online</div>
+        <h2>Rádio AD Belém <span>FM 88.7</span></h2>
+        <p>A rádio AD Belém tem o compromisso de levar a palavra de Deus e o refrigério aos corações, com louvores que elevam sua fé às alturas.</p>
+        <div class="radio-player-bar">
+          <button class="rplay-btn" id="rpb" onclick="toggleRadio()">▶</button>
+          <div class="rinfo"><div class="rsong" id="rl">AD Belém FM 88.7 – ao vivo</div><div class="rsub">Clique para ouvir</div></div>
+          <div class="swave" id="sw" style="opacity:0;"><div class="sbar"></div><div class="sbar"></div><div class="sbar"></div><div class="sbar"></div><div class="sbar"></div></div>
+        </div>
+        <audio id="ra" src="https://servidor16.brlogic.com:7288/live"></audio>
+        <a href="https://www.radioadbelemsp.com.br/" target="_blank" class="btn-radio">📻 Acessar site da Rádio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPA / CONTATO -->
+  <section class="igrejas-section" id="contato">
+    <div class="igrejas-inner">
+      <div class="sh-row" style="max-width:100%;padding:0;">
+        <div>
+          <p class="eyebrow">Onde estamos</p>
+          <h2 class="sh-title">Nossa <span>Igreja</span></h2>
+          <div class="sh-div"></div>
+        </div>
+      </div>
+      <div class="igrejas-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.4!2d-46.652!3d-23.592!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zUnVhIE1hcmlhIEFsbWVpZGEgZG8gUHJhZG8sIDUx!5e0!3m2!1spt-BR!2sbr!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p class="igrejas-addr">📍 Rua Maria Almeida do Prado, 51 – Indianópolis, São Paulo/SP &nbsp;·&nbsp; Sede: Rua Dr. Fomm, 140 – Belenzinho/SP</p>
+    </div>
+  </section>
+
+  <!-- VERSÍCULO FINAL -->
+  <div class="verse-final">
+    <blockquote>"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."</blockquote>
+    <cite>João 3:16</cite>
+    <div class="vf-social">
+      <a href="https://facebook.com" target="_blank" class="vf-soc">f</a>
+      <a href="https://instagram.com" target="_blank" class="vf-soc">in</a>
+      <a href="https://youtube.com" target="_blank" class="vf-soc">▶</a>
+    </div>
+    <div><a href="#" onclick="scrollTo('radio')" class="vf-radio">▶ Ouça a Rádio AD Belém FM 88.7</a></div>
+  </div>
+
+</div><!-- /page-home -->
+
+
+<!-- ══════════ PÁGINA: NOSSO CREDO ══════════ -->
+<div id="page-credo" class="page">
+  <div class="page-header">
+    <h1>Nosso Credo</h1>
+    <p class="breadcrumb"><a onclick="showPage('home')">Home</a> &rsaquo; Nosso Credo</p>
+  </div>
+  <div class="page-content">
+    <div class="divider-gold"></div>
+    <h2>O que cremos</h2>
+    <p>A Assembleia de Deus – Setor Indianópolis, integrante do Ministério do Belém, fundamenta sua fé nas doutrinas históricas do cristianismo evangélico, tendo a Bíblia Sagrada como única regra de fé e prática.</p>
+
+    <div class="verse-box">
+      <p>"Toda Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça."</p>
+      <cite>2 Timóteo 3:16</cite>
+    </div>
+
+    <h2>A Bíblia Sagrada</h2>
+    <p>Cremos que a Bíblia Sagrada, composta pelo Antigo e Novo Testamento, é a Palavra de Deus inspirada pelo Espírito Santo. É infalível, inerrante e a autoridade suprema para a vida cristã e para a doutrina da Igreja.</p>
+
+    <h2>Deus Trino</h2>
+    <p>Cremos em um só Deus eterno, que existe em três Pessoas distintas e coiguais: Pai, Filho e Espírito Santo. Cada Pessoa é plenamente Deus, e os três são um único Deus (Mateus 28:19; 2 Coríntios 13:14).</p>
+
+    <h2>Jesus Cristo</h2>
+    <p>Cremos que Jesus Cristo é o Filho eterno de Deus, que se encarnou pela ação do Espírito Santo e nasceu da Virgem Maria. Ele viveu uma vida sem pecado, morreu na cruz como sacrifício expiatório pelos nossos pecados, ressuscitou corporalmente no terceiro dia e ascendeu ao céu, onde intercede por nós à direita do Pai.</p>
+
+    <h2>O Espírito Santo</h2>
+    <p>Cremos no Espírito Santo, terceira Pessoa da Trindade, que convence o mundo do pecado, opera o novo nascimento, habita em todos os crentes e concede dons espirituais para edificação da Igreja. Cremos no batismo no Espírito Santo, com a evidência inicial de falar em outras línguas (Atos 2:4).</p>
+
+    <h2>Salvação</h2>
+    <p>Cremos que a salvação é pela graça, mediante a fé em Jesus Cristo, não por obras humanas. Todo aquele que se arrepender de seus pecados e crer em Jesus Cristo como Senhor e Salvador será salvo e terá a vida eterna (João 3:16; Efésios 2:8-9).</p>
+
+    <h2>O Novo Nascimento</h2>
+    <p>Cremos que é necessário nascer de novo pela ação do Espírito Santo. O novo nascimento produz uma transformação interior que se manifesta numa vida nova em Cristo Jesus (João 3:3-5).</p>
+
+    <h2>O Batismo nas Águas</h2>
+    <p>Cremos no batismo nas águas por imersão, como ato de obediência e testemunho público da fé em Jesus Cristo, para aqueles que já se converteram ao Senhor (Mateus 28:19; Atos 2:38).</p>
+
+    <h2>A Santa Ceia</h2>
+    <p>Cremos na Santa Ceia do Senhor como memorial da morte e ressurreição de Cristo, a ser celebrada até a Sua vinda, em memória d'Ele (1 Coríntios 11:23-26).</p>
+
+    <h2>A Segunda Vinda de Cristo</h2>
+    <p>Cremos no retorno pessoal, visível e glorioso de Jesus Cristo para buscar a Sua Igreja (1 Tessalonicenses 4:16-17) e, posteriormente, para estabelecer o Seu reino eterno.</p>
+
+    <div class="verse-box">
+      <p>"Jesus respondeu: Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim."</p>
+      <cite>João 14:6</cite>
+    </div>
+  </div>
+</div><!-- /page-credo -->
+
+
+<!-- ══════════ PÁGINA: NOTÍCIAS ══════════ -->
+<div id="page-noticias" class="page">
+  <div class="page-header">
+    <h1>Notícias</h1>
+    <p class="breadcrumb"><a onclick="showPage('home')">Home</a> &rsaquo; Notícias</p>
+  </div>
+  <div class="page-content" style="max-width:1200px;">
+    <div class="divider-gold"></div>
+    <div class="noticias-page-grid">
+
+      <div class="npcard">
+        <div class="npthumb t1"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Pastoral</p>
+          <h3>Pr. Adeli assume liderança no Setor Indianópolis</h3>
+          <p>Culto de transição ocorreu em 1º de abril de 2025, dirigido pelo Vice-Presidente Pastor José Wellington Costa Junior.</p>
+          <a href="https://ad.org.br/pr-adeli-geraldo-substitui-pr-veiga-em-indianopolis/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+      <div class="npcard">
+        <div class="npthumb t2"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Batismo</p>
+          <h3>1º Batismo de 2026 enche o templo na AD Belém em SP</h3>
+          <p>Foram 690 homens e 654 mulheres, totalizando 1.344 candidatos no último domingo de fevereiro.</p>
+          <a href="https://ad.org.br/1o-batismo-de-2026-enche-o-templo-na-ad-belem-em-sp/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+      <div class="npcard">
+        <div class="npthumb t3"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Eventos</p>
+          <h3>Culto da Família na Assembleia de Deus Ministério do Belém</h3>
+          <p>Culto especial reuniu gerações em momentos de adoração, comunhão e crescimento espiritual.</p>
+          <a href="https://ad.org.br/culto-da-familia-na-assembleia-de-deus-ministerio-do-belem/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+      <div class="npcard">
+        <div class="npthumb t4"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Rádio</p>
+          <h3>"Palavra em Foco" celebra um ano com edição especial</h3>
+          <p>Programa transmitido pela Rádio AD FM 88.7 completou um ano com presença do Pastor Presidente.</p>
+          <a href="https://ad.org.br/palavra-em-foco-celebra-um-ano-com-edicao-especial-e-participacao-do-pastor-jose-wellington-bezerra-da-costa/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+      <div class="npcard">
+        <div class="npthumb t5"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Setores</p>
+          <h3>Transições pastorais marcam gratidão e continuidade no Ministério</h3>
+          <p>O Ministério do Belém viveu dias especiais de transições pastorais em diferentes regiões de SP.</p>
+          <a href="https://ad.org.br/transicoes-pastorais-marcam-dias-de-gratidao-e-continuidade-no-ministerio-do-belem-nos-setores-de-sao-miguel-paulista-zona-leste-e-jd-dos-pimentas-em-guarulhos/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+      <div class="npcard">
+        <div class="npthumb t6"><svg viewBox="0 0 40 40" fill="white"><rect x="17" y="4" width="6" height="32" rx="2"/><rect x="4" y="12" width="32" height="6" rx="2"/></svg></div>
+        <div class="npbody">
+          <p class="npcat">Pastoral</p>
+          <h3>Transição Pastoral no Setor de Osasco (SP)</h3>
+          <p>Pastor José Prado Veiga assumiu os trabalhos substituindo Pr. Luiz Ricardo por motivo de saúde.</p>
+          <a href="https://ad.org.br/transicao-pastoral-no-setor-de-osasco-sp/" target="_blank" class="nplink">Leia mais →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /page-noticias -->
+
+
+<!-- FOOTER (compartilhado entre todas as páginas) -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="ft-title">AD Indianópolis</div>
+      <div class="ft-sub">Ministério do Belém</div>
+      <p>Assembleia de Deus – Setor Indianópolis. Rua Maria Almeida do Prado, 51. Fazemos parte do Ministério do Belém, cuja sede fica na Rua Dr. Fomm, 140, Belenzinho/SP.</p>
+      <div class="ft-social">
+        <a href="https://facebook.com" target="_blank">f</a>
+        <a href="https://instagram.com" target="_blank">in</a>
+        <a href="https://youtube.com" target="_blank">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Institucional</h4>
+      <ul>
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('credo')">Nosso Credo</a></li>
+        <li><a onclick="showPage('noticias')">Notícias</a></li>
+        <li><a onclick="showPage('home');setTimeout(()=>scrollTo('culto-vivo'),100)">Culto ao vivo</a></li>
+        <li><a onclick="showPage('home');setTimeout(()=>scrollTo('contato'),100)">Contato</a></li>
+        <li><a href="https://ad.org.br/privacidade" target="_blank">Políticas de privacidade</a></li>
+        <li><a href="https://ad.org.br/cookies/" target="_blank">Políticas de cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Links relacionados</h4>
+      <ul>
+        <li><a href="https://ad.org.br" target="_blank">AD Belém – Sede</a></li>
+        <li><a href="https://www.tvadbelem.com.br/" target="_blank">TV AD Belém</a></li>
+        <li><a href="https://www.radioadbelemsp.com.br/" target="_blank">Rádio AD Belém FM 88.7</a></li>
+        <li><a href="https://cgadb.org.br" target="_blank">CGADB</a></li>
+        <li><a href="https://confradesp.com.br" target="_blank">CONFRADESP</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contatos</h4>
+      <div class="ct-row"><div class="ct-lbl">Endereço</div><div class="ct-val">Rua Maria Almeida do Prado, 51 – Indianópolis, SP</div></div>
+      <div class="ct-row"><div class="ct-lbl">Sede</div><div class="ct-val"><a href="https://ad.org.br" target="_blank">ad.org.br</a></div></div>
+      <div class="ct-row"><div class="ct-lbl">Pastor</div><div class="ct-val">Pastor Adeli</div></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>AD Indianópolis © 2026 – Todos os direitos reservados · Ministério do Belém</p>
+    <div style="display:flex;gap:14px;">
+      <a href="https://ad.org.br/privacidade" target="_blank">Políticas de Privacidade</a>
+      <a href="https://ad.org.br/cookies/" target="_blank">Políticas de Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<!-- COOKIE BAR -->
+<div class="cookie-bar" id="cb">
+  <span>Utilizamos cookies para lhe proporcionar a melhor experiência. Saiba mais em <a href="https://ad.org.br/cookies/" target="_blank">configurações</a>.</span>
+  <button class="ck-btn" onclick="document.getElementById('cb').classList.add('hidden')">Aceitar</button>
+</div>
+
+<script>
+// ── NAVEGAÇÃO SPA ──────────────────────────────────────────────
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
+  var el = document.getElementById('nav-' + id);
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollTo(id) {
+  showPage('home');
+  setTimeout(function(){
+    var el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+// ── HERO SLIDER ────────────────────────────────────────────────
+(function(){
+  var s=document.getElementById('slider'), dots=document.querySelectorAll('.dot'), cur=0, tot=3, tmr;
+  function go(n){ cur=(n+tot)%tot; s.style.transform='translateX(-'+(cur*100)+'%)'; dots.forEach(function(d,i){d.classList.toggle('active',i===cur);}); }
+  document.getElementById('sn').onclick=function(){go(cur+1);rt();};
+  document.getElementById('sp').onclick=function(){go(cur-1);rt();};
+  dots.forEach(function(d){d.onclick=function(){go(+d.dataset.i);rt();};});
+  function rt(){clearInterval(tmr);tmr=setInterval(function(){go(cur+1);},5500);}
+  rt();
+})();
+
+// ── CARROSSEL NOTÍCIAS ─────────────────────────────────────────
+(function(){
+  var track=document.getElementById('ct'), cards=track.children, cur=0;
+  function pv(){return window.innerWidth<700?1:window.innerWidth<960?2:3;}
+  function upd(){ var p=pv(),mx=cards.length-p; if(cur>mx)cur=mx; track.style.transform='translateX(-'+(cur*(cards[0].offsetWidth+20))+'px)'; }
+  document.getElementById('cn').onclick=function(){var p=pv(),mx=cards.length-p;if(cur<mx){cur++;upd();}};
+  document.getElementById('cp').onclick=function(){if(cur>0){cur--;upd();}};
+  window.addEventListener('resize',upd);
+})();
+
+// ── RÁDIO ──────────────────────────────────────────────────────
+var rPlaying=false;
+function toggleRadio(){
+  var a=document.getElementById('ra'),btn=document.getElementById('rpb'),disc=document.getElementById('rd'),sw=document.getElementById('sw'),lbl=document.getElementById('rl');
+  rPlaying=!rPlaying;
+  if(rPlaying){ a.play().catch(function(){}); btn.textContent='⏸'; disc.classList.add('playing'); sw.style.opacity='1'; lbl.textContent='AD Belém FM 88.7 – ao vivo'; }
+  else { a.pause(); btn.textContent='▶'; disc.classList.remove('playing'); sw.style.opacity='0'; lbl.textContent='AD Belém FM 88.7 – pausado'; }
+}
+</script>
+</body>
+</html>
